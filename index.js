@@ -63,6 +63,10 @@ function getInfoFromHTML (html, from = "dbip") {
     const $ = cheerio.load(html);
     const tableRaw = $(initialQuery);
 
+    if (tableRaw.length < 1) {
+        return null;
+    };
+
     const ipValues = tableRaw.children();
     const parseRegex = /(?:^ |[\n])/g;
     const ipInfo = {};
