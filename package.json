@@ -1,16 +1,31 @@
 {
-  "name": "check-host-api",
-  "version": "1.0.0",
-  "description": "",
+  "name": "checkhost",
+  "version": "1.0.3",
+  "description": "A check-host.net wrapper.",
   "main": "index.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.9",
+    "superagent": "^6.1.0"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "ice-dev (voyant)",
-  "license": "ISC",
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.6",
-    "superagent": "^6.1.0"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ice-devs/checkhost.git"
+  },
+  "keywords": [
+    "check-host",
+    "checkhost",
+    "check-host.net",
+    "checkhost.net",
+    "wrapper"
+  ],
+  "author": "voyant",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ice-devs/checkhost/issues"
+  },
+  "homepage": "https://github.com/ice-devs/checkhost#readme"
 }
