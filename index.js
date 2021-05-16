@@ -71,18 +71,48 @@ function getInfoFromHTML (html, from = "dbip") {
     const parseRegex = /(?:^ |[\n])/g;
     const ipInfo = {};
 
-    ipInfo.ip_address   = $($(ipValues[0]).children()[1]).text().replace(parseRegex, "");
-    ipInfo.hostname     = $($(ipValues[1]).children()[1]).text().replace(parseRegex, "");
-    ipInfo.ip_range     = $($(ipValues[2]).children()[1]).text().replace(parseRegex, "").replace("CIDR", "").split("-");
-    ipInfo.isp          = $($(ipValues[3]).children()[1]).text().replace(parseRegex, "");
-    ipInfo.org          = $($(ipValues[4]).children()[1]).text().replace(parseRegex, "");
-    ipInfo.country      = $($(ipValues[5]).children()[1]).text().replace(parseRegex, "").split("(")[0];
-    ipInfo.country_code = $($(ipValues[5]).children()[1]).text().replace(parseRegex, "").split("(")[1].replace(")", "");
-    ipInfo.region       = $($(ipValues[6]).children()[1]).text().replace(parseRegex, "");
-    ipInfo.city         = $($(ipValues[7]).children()[1]).text().replace(parseRegex, "");
-    ipInfo.timezone     = { region: $($(ipValues[8]).children()[1]).text().replace(parseRegex, "").split(", ")[0], timezone: $($(ipValues[8]).children()[1]).text().replace(parseRegex, "").split(", ")[1] };
-    ipInfo.local_time   = { now: $($(ipValues[9]).children()[1]).text().replace(parseRegex, "").split(" / ")[0], date: $($(ipValues[9]).children()[1]).text().replace(parseRegex, "").split(" / ")[1] };
-    ipInfo.postal_code  = parseInt($($(ipValues[10]).children()[1]).text().replace(parseRegex, ""));
+    ipInfo.ip_address           = $($(ipValues[0]).children()[1]).text().replace(parseRegex, "");
+    ipInfo.hostname             = $($(ipValues[1]).children()[1]).text().replace(parseRegex, "");
+    ipInfo.ip_range             = $($(ipValues[2]).children()[1]).text().replace(parseRegex, "").replace("CIDR", "").split("-");
+    ipInfo.ip_range_full_string = $($(ipValues[2]).children()[1]).text().replace(parseRegex, "").replace("CIDR", "");
+    ipInfo.isp                  = $($(ipValues[3]).children()[1]).text().replace(parseRegex, "");
+    ipInfo.org                  = $($(ipValues[4]).children()[1]).text().replace(parseRegex, "");
+    ipInfo.country              = $($(ipValues[5]).children()[1]).text().replace(parseRegex, "").split("(")[0];
+    ipInfo.country_code         = null;
+    ipInfo.region               = $($(ipValues[6]).children()[1]).text().replace(parseRegex, "");
+    ipInfo.city                 = $($(ipValues[7]).children()[1]).text().replace(parseRegex, "");
+    ipInfo.timezone             = { region: $($(ipValues[8]).children()[1]).text().replace(parseRegex, "").split(", ")[0], timezone: $($(ipValues[8]).children()[1]).text().replace(parseRegex, "").split(", ")[1] };
+    ipInfo.local_time           = { now: $($(ipValues[9]).children()[1]).text().replace(parseRegex, "").split(" / ")[0], date: $($(ipValues[9]).children()[1]).text().replace(parseRegex, "").split(" / ")[1] };
+    ipInfo.postal_code          = parseInt($($(ipValues[10]).children()[1]).text().replace(parseRegex, ""));
+
+    //* FAULT HANDLING *//
+
+    if (!ipInfo.ip_range[0]) {
+        ipInfo.ip_range[0] = "";
+    };
+
+    if (!ipInfo.ip_range[1]) {
+        ipInfo.ip_range[1] = "";
+    };
+
+    try {
+        ipInfo.country_code     = $($(ipValues[5]).children()[1]).text().replace(parseRegex, "").split("(")[1].replace(")", "");
+    } catch (e) {
+        ipInfo.country_code     = "";
+    };
+
+    if (isNaN(ipInfo.postal_code)) {
+        ipInfo.postal_code = "";
+    };
+
+    if (ipInfo.timezone.timezone == undefined) {
+        ipInfo.timezone.timezone = "";
+    };
+
+    if (ipInfo.local_time.date == undefined) {
+        ipInfo.local_time.date = "";
+    };
+
 
     return ipInfo;
 };
