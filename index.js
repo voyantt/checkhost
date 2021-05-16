@@ -54,6 +54,10 @@ module.exports = (address, from = 0) => {
                     resolve(getInfoFromHTML(res.text, "dbip"));
                 break;
             };
+        }).catch(err => {
+            if (err.response.status >= 500 && err.response.status <= 599) {
+                resolve("Too many requests, try again later.");
+            };
         });
     });
 };
