@@ -1,3 +1,5 @@
+# ⚠️ This package is no longer maintained, it may still work but it may cause problems in production.
+
 # Checkhost
 
 This package is a wrapper for [check-host.net](https://check-host.net), since they don't have an official IP Info API.
